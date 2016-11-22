@@ -21,6 +21,8 @@ class Session(models.Model):
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
     end_date = fields.Date(string="End Date", store=True,
         compute='_get_end_date', inverse='_set_end_date')
+    hours = fields.Float(string="Duration in hours",
+                         compute='_get_hours', inverse='_set_hours')
 
     @api.one
     @api.depends('seats', 'attendee_ids')
@@ -70,6 +72,15 @@ class Session(models.Model):
         start_date = fields.Datetime.from_string(self.start_date)
         end_date = fields.Datetime.from_string(self.end_date)
         self.duration = (end_date - start_date).days + 1
+
+    @api.depends('duration')
+    def _get_hours(self):
+        for r in self:
+            r.hours = r.duration * 24
+
+    def _set_hours(self):
+        for r in self:
+            r.duration = r.hours / 24
 
     @api.one
     @api.constrains('instructor_id', 'attendee_ids')
