@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import timedelta
-from openerp import api, exceptions,  fields, models
+from openerp import api, exceptions,  fields, models, _
 
 
 class Session(models.Model):
