@@ -23,20 +23,30 @@ sessions = call(model,method_name, domain, ['name','seats'])
 for session in sessions:
     print "Session %s (%s seats)" % (session['name'], session['seats'])
 
-#search
-domain = [('name', '=','Course 0')] 
-course_ids = call('openacademy.course', 'search', domain)
-print "course_id", course_ids 
-course_id = course_ids[0]
+# 3.search
+#domain = [('name', '=','Course 0')] 
+#course_ids = call('openacademy.course', 'search', domain)
+#print "course_id", course_ids 
+#course_id = course_ids[0]
 
-# 3.create a new session
+# 3.create a new session for the "Functional" course
+course_id = call('openacademy.course', 'search', [('name','ilike','Functional')])[0]
 session_id = call('openacademy.session', 'create', {
     'name' : 'My session',
     'course_id' : course_id,
 })
 
+# 4.create a new session
+session_id = call('openacademy.session', 'create', {
+    'name' : 'My session',
+    'course_id' : course_id,
+})
 
 # 4.create a new course
-session_id = call('openacademy.course', 'create', {
-    'name' : 'Funtional',
-})
+#session_id = call('openacademy.course', 'create', {
+#    'name' : 'Funtional',
+#})
+
+# 5.many2many
+#para concatenar 4 
+#'attendee_ids':[(4, responsible_id)],
