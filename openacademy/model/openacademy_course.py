@@ -12,10 +12,10 @@ class Course(models.Model):
 
     name = fields.Char(string='Title', required=True)
     description = fields.Text(string='Description')
-    responsible_id = fields.Many2one('res.users',
-        ondelete='set null', string="Responsible", index=True)
-    session_ids = fields.One2many(
-        'openacademy.session', 'course_id', string="Sessions")
+    responsible_id = fields.Many2one('res.users', ondelete='set null',
+                                     string="Responsible", index=True)
+    session_ids = fields.One2many('openacademy.session', 'course_id',
+                                  string="Sessions")
 
     @api.one
     def copy(self, default=None):
